@@ -1,0 +1,31 @@
+@**
+* Генерирует HTML input.
+*
+* Пример:
+* {{{
+* @text(field = myForm("name"), args = 'size -> 10, 'placeholder -> "Your name")
+* }}}
+*
+* @param Поле для формы.
+* @param args Множество дополнительных атрибутов.
+* @param handler конструктор поля.
+*@
+@(field: play.api.data.Field, args: (Symbol,Any)*)(implicit handler: helper.FieldConstructor, lang: play.api.i18n.Lang)
+
+@import helper._;
+
+@inputType = @{ args.toMap.get('type).map(_.toString).getOrElse("text") }
+@invalid = @{if (field.hasErrors){"is-invalid"} else if(!field.value.isEmpty){"is-valid"} else {""}}
+
+  <div class="form-group @if(field.hasErrors){error}">
+    <label class="control-label" for="@field.id">@{args.toMap.get('_label).map(_.toString).getOrElse(field.name)}</label>
+
+    <input class="form-control @invalid" type="@inputType" id="@field.id" name="@field.name" value="@field.value" @toHtmlArgs(args.filter(arg => !arg._1.name.startsWith("_") && arg._1 != 'id).toMap) />
+    <div class="invalid-feedback">@{field.error.map { error => error.message }}</div>
+    <div class="help-block">@{args.toMap.get('_help).map(_.toString).getOrElse("")}</div>
+
+  </div>
+
+
+
+

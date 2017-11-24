@@ -1,0 +1,24 @@
+@(featureForm: Form[Feature])
+
+@import helper._
+@import bootstrap._
+
+@main {
+    
+    <h1>Новая фича</h1>
+    
+    @form(routes.HomeController.save()) {
+        
+        <fieldset>
+            @CSRF.formField
+            @text(featureForm("title"), '_label -> "Название", '_help -> "")
+            @bootstrap.editor(featureForm("description"), '_label -> "Описание", '_help -> "")
+            @text(featureForm("imageUrl"), '_label -> "Ссылка на картинку", '_help -> "")
+        </fieldset>
+        
+        <div class="actions">
+            <input type="submit" value="Создать фичу" class="btn btn-primary"> или
+            <a href="@routes.HomeController.list()" class="btn btn-default">Отменить</a>
+        </div>
+    }
+}

@@ -1,0 +1,22 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Маршрут к главной странице сайта
+GET     /                           controllers.HomeController.index
+
+GET     /feature                    controllers.HomeController.list
+
+# Создание
+GET     /feature/new                controllers.HomeController.create()
+POST    /feature                    controllers.HomeController.save()
+
+# Редактирование
+GET     /feature/:id                controllers.HomeController.edit(id:Long)
+POST    /feature/:id                controllers.HomeController.update(id:Long)
+
+POST    /feature/:id/delete         controllers.HomeController.delete(id:Long)
+
+# Отображает статические файлы из папки /public в /public URL
+GET     /*file               controllers.Assets.versioned(path="/public", file: Asset)
+

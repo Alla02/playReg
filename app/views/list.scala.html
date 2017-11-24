@@ -1,0 +1,31 @@
+@(all: List[Feature])
+
+@main {
+
+    <h1 id="homeTitle">Фичи</h1>
+    @if(all.isEmpty) {
+        <div class="well">
+            <em>Нет данных для отображения</em>
+        </div>
+
+    } else {
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Название</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @for(feature <- all.asScala) {
+                    <tr>
+                        <td><a href="@routes.HomeController.edit(feature.id)">@feature.title</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    <a href="@routes.HomeController.create()" class="btn btn-primary">Добавить фичу</a>
+}
